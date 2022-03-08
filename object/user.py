@@ -1,3 +1,5 @@
+import functools
+
 from object.fixedTime import FixedTime
 from object.task import Task
 
@@ -69,12 +71,27 @@ class User:
         self.__fixedTimes.remove(ft)
         self.__labels.remove(ft.get_label())
 
-    #def deadline_compare(self, obj1: str, obj2: str):
-    
+    def compare(self, obj1: Task, obj2: Task):
+        print(obj1.get_deadline(), obj2.get_deadline())
+        if obj1.get_deadline() < obj2.get_deadline():
+            return -1
+        elif obj1.get_deadline() > obj2.get_deadline():
+            return 1
+        else:
+            if obj1.get_major() and (not obj2.get_major()):
+                return -1
+            elif (not obj1.get_major()) and obj2.get_major():
+                return 1
+            else:
+                if obj1.get_credit() > obj2.get_credit():
+                    return -1
+                else:
+                    return 1
+
     def sort_task(self):
-        self.__task.sort()
+        __task = sorted(self.__task, key=functools.cmp_to_key(self.compare))
         return
 
-
     def schedule(self):
+        self.sort_task()
         return
