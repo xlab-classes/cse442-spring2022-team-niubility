@@ -72,7 +72,6 @@ class User:
         self.__labels.remove(ft.get_label())
 
     def compare(self, obj1: Task, obj2: Task):
-        print(obj1.get_deadline(), obj2.get_deadline())
         if obj1.get_deadline() < obj2.get_deadline():
             return -1
         elif obj1.get_deadline() > obj2.get_deadline():
@@ -85,12 +84,17 @@ class User:
             else:
                 if obj1.get_credit() > obj2.get_credit():
                     return -1
-                else:
+                elif obj1.get_credit() < obj2.get_credit():
                     return 1
+                else:
+                    if obj1.get_priority() > obj2.get_priority():
+                        return -1
+                    else:
+                        return 1
+
 
     def sort_task(self):
-        __task = sorted(self.__task, key=functools.cmp_to_key(self.compare))
-        return
+        self.__task = sorted(self.__task, key=functools.cmp_to_key(self.compare))
 
     def schedule(self):
         self.sort_task()
